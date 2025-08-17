@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ashoka Infotech — Innovations & Technologies</title>
+<style>
+  :root{
+    --brand1:#1a2a6c;
+    --brand2:#203a43;
+    --brand3:#2c5364;
+    --accent:#ffcc00;
+    --bg:#f9fafc;
+    --text:#1f2b37;
+    --muted:#64748b;
+    --card:#ffffff;
+    --shadow:0 6px 18px rgba(16,24,40,.08);
+    --radius:12px;
+    /* JS updates this to match header height exactly */
+    --header-h: 88px;
+  }
+
+  /* Base reset + typography */
+  *{box-sizing:border-box}
+  html{
+    scroll-behavior:smooth;
+    scroll-padding-top: var(--header-h);
+  }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font: 16px/1.7 "Poppins", "Segoe UI", Tahoma, sans-serif;
+  }
+  img{max-width:100%; display:block}
+  a{color:inherit; text-decoration:none}
+
+  /* Header (sticky) */
+  header{
+    position: sticky; top:0; z-index:1000;
+    background: linear-gradient(135deg,var(--brand1),var(--brand2),var(--brand3));
+    color:#fff;
+    box-shadow:0 2px 10px rgba(0,0,0,.15);
+  }
+  .nav-wrap{
+    width:min(1200px,92%);
+    margin:auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 0;
+    gap:12px;
+  }
+  .brand{
+    display:flex; flex-direction:column;
+  }
+  .brand .logo{font-weight:700; letter-spacing:.4px; font-size:1.5rem}
+  .brand .tag {font-size:.95rem; color:#e9eef5; opacity:.9}
+
+  nav{display:flex; align-items:center; gap:22px}
+  nav a{
+    color:#f2f5f8; font-weight:600; padding:10px 6px; border-radius:8px;
+    transition:.25s ease;
+  }
+  nav a:hover, nav a.active{color:var(--accent)}
+
+  /* Mobile menu */
+  .nav-toggle{
+    display:none; border:0; background:#0f2433; color:#fff;
+    font-size:1.6rem; width:42px; height:42px; border-radius:9px; cursor:pointer;
+  }
+  @media (max-width: 820px){
+    .nav-toggle{display:block}
+    nav{
+      position: absolute; left:0; right:0; top: calc(var(--header-h) - 6px);
+      background: linear-gradient(135deg,var(--brand2),var(--brand3));
+      flex-direction:column; gap:0; padding:8px 0; display:none;
+    }
+    nav a{width:100%; text-align:center; padding:14px 16px}
+    nav.active{display:flex}
+  }
+
+  /* Hero */
+  .hero{
+    position:relative; overflow:hidden; color:#fff; text-align:center;
+    display:flex; align-items:center; justify-content:center; min-height:62vh;
+    background:
+      linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.55)),
+      url('https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
+  }
+  .hero .inner{padding:96px 20px}
+  .hero h1{
+    margin:0 0 10px; font-size: clamp(32px, 4.2vw, 48px); color: var(--accent);
+    text-shadow:0 5px 20px rgba(0,0,0,.35);
+  }
+  .hero p{margin:0 auto; max-width:760px; font-size: clamp(15px,2.4vw,19px); color:#f8fafc}
+
+  /* Section shell */
+  .section{
+    width:min(1200px,92%); margin:56px auto; scroll-margin-top: var(--header-h);
+  }
+  .section h2{
+    display:flex; align-items:center; gap:10px;
+    font-size: clamp(22px,2.8vw,28px); color:var(--brand2); margin:0 0 12px;
+  }
+  .section h2::before{
+    content:""; width:8px; height:28px; border-radius:4px; background:var(--accent);
+  }
+  .lead{color:var(--muted); margin-bottom:18px}
+
+  /* Card grid (clickable) */
+  .grid{
+    display:grid; gap:18px;
+    grid-template-columns: repeat(12, 1fr);
+  }
+  .card-link{
+    grid-column: span 4; background:var(--card); border-radius:var(--radius);
+    box-shadow: var(--shadow); overflow:hidden; display:block; transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .card-link:hover{ transform: translateY(-4px); box-shadow:0 10px 26px rgba(16,24,40,.12)}
+  .thumb{aspect-ratio: 16/9; background:#e5ecf3; overflow:hidden}
+  .thumb img{width:100%; height:100%; object-fit:cover}
+  .card-body{padding:16px 16px 18px}
+  .card-title{font-weight:700; color:var(--brand2); margin:0 0 6px; font-size:1.02rem}
+  .card-desc{color:#475569; font-size:.96rem}
+
+  @media (max-width: 980px){
+    .card-link{grid-column: span 6;}
+  }
+  @media (max-width: 640px){
+    .card-link{grid-column: span 12;}
+  }
+
+  /* Detail blocks */
+  .detail{
+    background: #ffffff; border-radius: var(--radius); box-shadow: var(--shadow);
+    padding: clamp(16px, 2.6vw, 28px); margin-top:22px;
+  }
+  .detail .row{
+    display:grid; gap:20px; grid-template-columns: 1.1fr 1.6fr; align-items:center;
+  }
+  .detail h3{margin:0 0 8px; color:var(--brand2); font-size: clamp(18px,2.4vw,24px)}
+  .detail p{margin:0 0 10px; color:#3b4754}
+  .detail .bullets{margin-top:10px}
+  .detail .bullets li{margin:6px 0 0 20px; color:#475569}
+  .backline{margin-top:12px}
+  .backline a{color:var(--brand2); font-weight:700}
+  .figure{border-radius:12px; overflow:hidden}
+
+  @media (max-width: 840px){
+    .detail .row{grid-template-columns: 1fr}
+  }
+
+  /* Footer */
+  footer{
+    margin-top:64px; background:var(--brand2); color:#e9eef5; text-align:center; padding:18px
+  }
+</style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header id="site-header">
+    <div class="nav-wrap">
+      <div class="brand">
+        <span class="logo">Ashoka Infotech</span>
+        <span class="tag">Innovations & Technologies</span>
+      </div>
+
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">☰</button>
+
+      <nav id="primary-nav" aria-label="Primary">
+        <a href="#home" class="active">Home</a>
+        <a href="#services">Services</a>
+        <a href="#solutions">Solutions</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="hero" aria-label="Hero">
+    <div class="inner">
+      <h1>Building Smart, Secure & Scalable IT</h1>
+      <p>End-to-end software, web, digital and security solutions—tailored for schools, retail, manufacturing and growing businesses.</p>
+    </div>
+  </section>
+
+  <main>
+    <!-- About -->
+    <section class="section" aria-label="About">
+      <h2>About Us</h2>
+      <p class="lead">
+        Ashoka Infotech delivers robust IT products and services: ERP platforms, custom software,
+        modern websites, digital marketing, and enterprise-grade security systems (CCTV, biometric attendance,
+        access control, and more).
+      </p>
+    </section>
+
+    <!-- Services (clickable cards) -->
+    <section id="services" class="section" aria-label="Services">
+      <h2>Our Services</h2>
+      <p class="lead">Click a service to see details with images and highlights.</p>
+
+      <div class="grid">
+        <a class="card-link" href="#svc-school-erp" aria-label="School ERP details">
+          <div class="thumb">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?q=80&w=1200&auto=format&fit=crop" alt="Students and teacher using computers in a lab">
+          </div>
+          <div class="card-body">
+            <div class="card-title">School ERP Software</div>
+            <div class="card-desc">Admissions, fees, timetable, exams, transport & parent portal.</div>
+          </div>
+        </a>
+
+        <a class="card-link" href="#svc-retail" aria-label="Retail Software details">
+          <div class="thumb">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1556740772-1a741367b93e?q=80&w=1200&auto=format&fit=crop" alt="Retail POS billing at counter">
+          </div>
+          <div class="card-body">
+            <div class="card-title">Retail Management Software</div>
+            <div class="card-desc">POS, barcode, inventory & GST billing—fast and accurate.</div>
+          </div>
+        </a>
+
+        <a class="card-link" href="#svc-manufacturing" aria-label="Manufacturing ERP details">
+          <div class="thumb">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=1200&auto=format&fit=crop" alt="Factory with automated assembly line">
+          </div>
+          <div class="card-body">
+            <div class="card-title">Manufacturing ERP</div>
+            <div class="card-desc">BOM, production planning, QC, inventory, orders & analytics.</div>
+          </div>
+        </a>
+
+        <a class="card-link" href="#svc-web" aria-label="Website Development details">
+          <div class="thumb">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1200&auto=format&fit=crop" alt="Developer code on screen">
+          </div>
+          <div class="card-body">
+            <div class="card-title">Website Development</div>
+            <div class="card-desc">Modern responsive sites, fast, SEO-ready, accessible.</div>
+          </div>
+        </a>
+
+        <a class="card-link" href="#svc-digital" aria-label="Digital marketing details">
+          <div class="thumb">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop" alt="Analytics dashboard on laptop">
+          </div>
+          <div class="card-body">
+            <div class="card-title">Digital Marketing</div>
+            <div class="card-desc">SEO/SEM, social media, content strategy & lead funnels.</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- SERVICE DETAILS -->
+      <article id="svc-school-erp" class="detail" tabindex="-1" aria-labelledby="svc-school-erp-h">
+        <div class="row">
+          <figure class="figure">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1580974928064-3eb694886505?q=80&w=1200&auto=format&fit=crop" alt="School dashboard on laptop and tablet">
+          </figure>
+          <div>
+            <h3 id="svc-school-erp-h">School ERP Software</h3>
+            <p>Manage the entire lifecycle—from admissions to alumni. Automate fee collection, attendance, exam schedules, reporting, and communication with parents through a secure portal.</p>
+            <ul class="bullets">
+              <li>Modules: Admissions, Fees, Academics, Exams, Transport, Library.</li>
+              <li>Role-based access: Admin, Teachers, Students, Parents.</li>
+              <li>Bulk SMS/Email, ID cards, report cards, and analytics.</li>
+            </ul>
+            <p class="backline"><a href="#services">← Back to Services</a></p>
+          </div>
+        </div>
+      </article>
+
+      <article id="svc-retail" class="detail" tabindex="-1" aria-labelledby="svc-retail-h">
+        <div class="row">
+          <figure class="figure">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1556742044-3c52d6e88c62?q=80&w=1200&auto=format&fit=crop" alt="Retail POS with barcode scanner and receipts">
+          </figure>
+          <div>
+            <h3 id="svc-retail-h">Retail Management Software</h3>
+            <p>Speed up billing, reduce stock-outs, and get real-time visibility over inventory and sales performance across outlets with our POS and back-office suite.</p>
+            <ul class="bullets">
+              <li>Barcode & GST billing, discounts, returns & loyalty programs.</li>
+              <li>Inventory sync, purchase planning, and supplier management.</li>
+              <li>Dashboards for footfall, sales trends, and profitability.</li>
+            </ul>
+            <p class="backline"><a href="#services">← Back to Services</a></p>
+          </div>
+        </div>
+      </article>
+
+      <article id="svc-manufacturing" class="detail" tabindex="-1" aria-labelledby="svc-manufacturing-h">
+        <div class="row">
+          <figure class="figure">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop" alt="Manufacturing plant with robotics">
+          </figure>
+          <div>
+            <h3 id="svc-manufacturing-h">Manufacturing ERP</h3>
+            <p>Plan, produce, and ship on time with a unified system covering BOM, work orders, quality checks, and warehouse operations—complete with cost tracking.</p>
+            <ul class="bullets">
+              <li>MRP, production planning & scheduling, maintenance logs.</li>
+              <li>Quality management, batch/lot tracking & serial numbers.</li>
+              <li>Integrated purchases, sales, and financial posting.</li>
+            </ul>
+            <p class="backline"><a href="#services">← Back to Services</a></p>
+          </div>
+        </div>
+      </article>
+
+      <article id="svc-web" class="detail" tabindex="-1" aria-labelledby="svc-web-h">
+        <div class="row">
+          <figure class="figure">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="Design and code on multiple screens">
+          </figure>
+          <div>
+            <h3 id="svc-web-h">Website Development</h3>
+            <p>We build fast, accessible, mobile-first websites with modern stacks. From corporate sites to portals and landing pages, everything is optimized for SEO and conversion.</p>
+            <ul class="bullets">
+              <li>Responsive UI, performance budget, Core Web Vitals friendly.</li>
+              <li>SEO metadata, sitemap, structured data, and analytics setup.</li>
+              <li>CMS options and secure hosting guidance.</li>
+            </ul>
+            <p class="backline"><a href="#services">← Back to Services</a></p>
+          </div>
+        </div>
+      </article>
+
+      <article id="svc-digital" class="detail" tabindex="-1" aria-labelledby="svc-digital-h">
+        <div class="row">
+          <figure class="figure">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1483478550801-ceba5fe50e8e?q=80&w=1200&auto=format&fit=crop" alt="Marketing team planning with charts and sticky notes">
+          </figure>
+          <div>
+            <h3 id="svc-digital-h">Digital Marketing</h3>
+            <p>Grow organic traffic and sharpen ad ROI with a data-driven strategy spanning SEO, paid search, social campaigns, and CRO for landing pages.</p>
+            <ul class="bullets">
+              <li>Keyword research, on-page SEO, technical audits.</li>
+              <li>Google Ads & social ads with conversion tracking.</li>
+              <li>Content calendars, creatives, and reporting dashboards.</li>
+            </ul>
+            <p class="backline"><a href="#services">← Back to Services</a></p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Solutions (clickable cards) -->
+    <section id="solutions" class="section" aria-label="Solutions">
+      <h2>Our Solutions</h2>
+      <p class="lead">Click a solution to explore images and details.</p>
+
+      <div class="grid">
+        <a class="card-link" href="#sol-hardware" aria-label="Computer Hardware details">
+          <div class="thumb">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop" alt="Computer hardware components on desk">
+          </div>
+          <div class="card-body">
+            <div class="card-title">Computer Hardware</div>
+            <div class="card-desc">Desktops, laptops, servers & networking devices.</div>
+          </div>
+        </a>
+
+        <a class="card-link" href="#sol-cctv" aria-label="CCTV Surveillance details">
+          <div class="thumb">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=1200&auto=format&fit=crop" alt="CCTV dome camera close-up">
+          </div>
+          <div class="card-body">
+            <div class="card-title">CCTV Surveillance</div>
+            <div class="card-desc">IP/HD cameras, NVR/DVR, remote monitoring & alerts.</div>
+          </div>
+        </a>
+
+        <a class="card-link" href="#sol-biometric" aria-label="Biometric Attendance details">
+          <div class="thumb">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1600267175165-c7f14130a2a0?q=80&w=1200&auto=format&fit=crop" alt="Biometric fingerprint scanner">
+          </div>
+          <div class="card-body">
+            <div class="card-title">Biometric Attendance</div>
+            <div class="card-desc">Fingerprint/RFID/Face, timesheets & payroll export.</div>
+          </div>
+        </a>
+
+        <a class="card-link" href="#sol-security" aria-label="Security Systems details">
+          <div class="thumb">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1200&auto=format&fit=crop" alt="Secure datacenter corridor">
+          </div>
+          <div class="card-body">
+            <div class="card-title">Security Systems</div>
+            <div class="card-desc">Access control, alarms, UPS & integrated monitoring.</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- SOLUTION DETAILS -->
+      <article id="sol-hardware" class="detail" tabindex="-1" aria-labelledby="sol-hardware-h">
+        <div class="row">
+          <figure class="figure">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop" alt="Workstations and server-grade hardware">
+          </figure>
+          <div>
+            <h3 id="sol-hardware-h">Computer Hardware</h3>
+            <p>From SMB to enterprise, we supply and integrate reliable desktops, laptops, servers, and networking equipment with warranty and on-site support.</p>
+            <ul class="bullets">
+              <li>Brand-certified systems, peripherals, and licenses.</li>
+              <li>LAN/WAN setup, Wi-Fi, firewalls, and storage appliances.</li>
+              <li>AMC, spare inventory, and rapid RMA handling.</li>
+            </ul>
+            <p class="backline"><a href="#solutions">← Back to Solutions</a></p>
+          </div>
+        </div>
+      </article>
+
+      <article id="sol-cctv" class="detail" tabindex="-1" aria-labelledby="sol-cctv-h">
+        <div class="row">
+          <figure class="figure">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1200&auto=format&fit=crop" alt="Network video recorder and multiple camera feeds">
+          </figure>
+          <div>
+            <h3 id="sol-cctv-h">CCTV Surveillance</h3>
+            <p>Design, install, and maintain end-to-end video surveillance—covering entry-exit, production floors, warehouses, and perimeters with remote access.</p>
+            <ul class="bullets">
+              <li>IP/HD cameras, NVR/DVR, PoE, and storage sizing.</li>
+              <li>Motion alerts, mobile view, and cloud backups.</li>
+              <li>Compliance-ready retention policies and audits.</li>
+            </ul>
+            <p class="backline"><a href="#solutions">← Back to Solutions</a></p>
+          </div>
+        </div>
+      </article>
+
+      <article id="sol-biometric" class="detail" tabindex="-1" aria-labelledby="sol-biometric-h">
+        <div class="row">
+          <figure class="figure">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1591696216274-9f9280c37a2f?q=80&w=1200&auto=format&fit=crop" alt="Employee authenticating with fingerprint">
+          </figure>
+          <div>
+            <h3 id="sol-biometric-h">Biometric Attendance</h3>
+            <p>Accurate attendance capture with fingerprint, RFID, or face recognition devices—integrated into timesheets and payroll exports.</p>
+            <ul class="bullets">
+              <li>Shift rules, grace time, OT, and holiday calendars.</li>
+              <li>Centralized logs, device health and alerts.</li>
+              <li>Excel/CSV exports and HRMS integrations.</li>
+            </ul>
+            <p class="backline"><a href="#solutions">← Back to Solutions</a></p>
+          </div>
+        </div>
+      </article>
+
+      <article id="sol-security" class="detail" tabindex="-1" aria-labelledby="sol-security-h">
+        <div class="row">
+          <figure class="figure">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1507409613957-9f88b27b6148?q=80&w=1200&auto=format&fit=crop" alt="Access control and alarm systems">
+          </figure>
+          <div>
+            <h3 id="sol-security-h">Security Systems</h3>
+            <p>Integrated safety with access control, intrusion alarms, and power continuity (UPS). Central monitoring keeps facilities resilient and compliant.</p>
+            <ul class="bullets">
+              <li>Card/biometric access, door controllers, and logs.</li>
+              <li>Alarms, sensors, panic buttons, and sirens.</li>
+              <li>UPS sizing, redundancy, and maintenance plans.</li>
+            </ul>
+            <p class="backline"><a href="#solutions">← Back to Solutions</a></p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section" aria-label="Contact">
+      <h2>Contact Us</h2>
+      <p class="lead">Have a project in mind? Let’s discuss how we can help.</p>
+      <div class="detail">
+        <div class="row">
+          <figure class="figure">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1525182008055-f88b95ff7980?q=80&w=1200&auto=format&fit=crop" alt="Customer support and collaboration">
+          </figure>
+          <div>
+            <h3>Send a Message</h3>
+            <p>Share your requirements and we’ll get back with a tailored plan.</p>
+            <form onsubmit="event.preventDefault(); alert('Thanks! We will contact you shortly.');">
+              <div style="display:grid; gap:12px; grid-template-columns:1fr 1fr; margin-top:8px">
+                <input required placeholder="Your Name" aria-label="Your Name" />
+                <input required type="email" placeholder="Your Email" aria-label="Your Email" />
+              </div>
+              <input style="margin-top:12px" placeholder="Subject" aria-label="Subject" />
+              <textarea required rows="5" style="margin-top:12px" placeholder="Message" aria-label="Message"></textarea>
+              <div style="margin-top:14px">
+                <button style="background:var(--brand2); color:#fff; border:0; padding:12px 18px; border-radius:10px; font-weight:700; cursor:pointer">Send Message</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="yr"></span> Ashoka Infotech. All Rights Reserved.
+  </footer>
+
+<script>
+  // --- Helpers ---
+  const $ = (sel, ctx=document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
+
+  // Set footer year
+  $('#yr').textContent = new Date().getFullYear();
+
+  // Measure header height and set CSS var to avoid anchor overlap
+  const header = $('#site-header');
+  function updateHeaderHeight(){
+    const h = header.getBoundingClientRect().height;
+    document.documentElement.style.setProperty('--header-h', h + 'px');
+  }
+  updateHeaderHeight();
+  window.addEventListener('resize', updateHeaderHeight);
+
+  // Mobile menu toggle
+  const toggle = $('.nav-toggle');
+  const nav = $('#primary-nav');
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('active');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    // recalc in case header grew
+    updateHeaderHeight();
+  });
+
+  // Smooth scroll with exact offset (prevents content from hiding under header)
+  function smoothScrollTo(id){
+    const target = document.getElementById(id);
+    if(!target) return;
+    const headerH = header.getBoundingClientRect().height;
+    const y = target.getBoundingClientRect().top + window.pageYOffset - (headerH + 8);
+    window.scrollTo({ top: y, behavior: 'smooth' });
+    // move focus for accessibility
+    target.setAttribute('tabindex','-1'); target.focus({preventScroll:true});
+    // close mobile nav after click
+    nav.classList.remove('active'); toggle.setAttribute('aria-expanded','false');
+  }
+
+  // Intercept internal anchor clicks
+  document.addEventListener('click', (e)=>{
+    const a = e.target.closest('a[href^="#"]');
+    if(!a) return;
+    const hash = a.getAttribute('href');
+    if(hash.length>1){
+      e.preventDefault();
+      smoothScrollTo(hash.slice(1));
+      // update active state in main nav (if link exists there)
+      $$('#primary-nav a').forEach(n=>n.classList.toggle('active', n.getAttribute('href')===hash));
+    }
+  });
+
+  // Highlight current section while scrolling
+  const sections = ['home','services','solutions','contact'].map(id => document.getElementById(id));
+  const observer = new IntersectionObserver((entries)=>{
+    const visible = entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+    if(!visible) return;
+    const id = visible.target.id ? '#'+visible.target.id : '';
+    $$('#primary-nav a').forEach(n=>n.classList.toggle('active', n.getAttribute('href')===id));
+  }, { rootMargin: `-${header.offsetHeight + 10}px 0px -60% 0px`, threshold:[0.25,0.6,0.9] });
+  sections.forEach(sec => sec && observer.observe(sec));
+</script>
+</body>
+</html>
